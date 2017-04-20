@@ -60,17 +60,17 @@ class Conexion{
 		$this->con->query("SET NAMES 'utf8'");
 	}
 
-    /**
-     * [__clone Evita que el objeto se pueda clonar]
-     * @return [type] [message]
-     */
-    public function __clone()
-    {
-        trigger_error('La clonación de este objeto no está permitida', E_USER_ERROR);
-    }
+	/**
+	* [__clone Evita que el objeto se pueda clonar]
+	* @return [type] [message]
+	*/
+	public function __clone()
+	{
+		trigger_error('La clonación de este objeto no está permitida', E_USER_ERROR);
+	}
 
 	public function ConsultaSimple($sql){
-		$this->con->query($sql);
+	$this->con->query($sql);
 	}
 
 	public function ConsultaRetorno($sql){
