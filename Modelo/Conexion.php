@@ -70,7 +70,7 @@ class Conexion{
 	}
 
 	public function ConsultaSimple($sql){
-	$this->con->query($sql);
+		$this->con->query($sql);
 	}
 
 	public function ConsultaRetorno($sql){
