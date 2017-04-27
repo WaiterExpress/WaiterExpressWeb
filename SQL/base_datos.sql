@@ -34,6 +34,7 @@
 -- @filesource
 --
 
+
 /*!40101 SET NAMES utf8 */;
 
 /*!40101 SET SQL_MODE=''*/;
@@ -47,10 +48,10 @@
 DROP TABLE IF EXISTS `avatar`;
 
 CREATE TABLE `avatar` (
-  `id` tinyint(4) NOT NULL AUTO_INCREMENT,
-  `avatar` varchar(10) DEFAULT 'avatar.png',
+  `id` TINYINT(4) NOT NULL AUTO_INCREMENT,
+  `avatar` VARCHAR(10) DEFAULT 'avatar.png',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*Data for the table `avatar` */
 
@@ -63,16 +64,16 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `roles`;
 
 CREATE TABLE `roles` (
-  `id_roles` int(11) NOT NULL,
-  `rol` varchar(45) DEFAULT NULL,
+  `id_roles` INT(11) NOT NULL,
+  `rol` VARCHAR(45) DEFAULT NULL,
   PRIMARY KEY (`id_roles`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*Data for the table `roles` */
 
 LOCK TABLES `roles` WRITE;
 
-insert  into `roles`(`id_roles`,`rol`) values (0,'Administrador'),(1,'Gerente Restaurante'),(2,'Cocinero'),(3,'Salonero'),(4,'Cliente');
+INSERT  INTO `roles`(`id_roles`,`rol`) VALUES (0,'Administrador'),(1,'Gerente Restaurante'),(2,'Cocinero'),(3,'Salonero'),(4,'Cliente');
 
 UNLOCK TABLES;
 
@@ -81,17 +82,17 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `usuario`;
 
 CREATE TABLE `usuario` (
-  `cedula` char(15) NOT NULL,
-  `usuario` varchar(20) DEFAULT NULL,
-  `clave` varchar(88) DEFAULT NULL,
-  `id_roles` int(11) DEFAULT NULL,
-  `inactivo` bit(1) DEFAULT b'0',
+  `cedula` CHAR(15) NOT NULL,
+  `usuario` VARCHAR(20) DEFAULT NULL,
+  `clave` VARCHAR(88) DEFAULT NULL,
+  `id_roles` INT(11) DEFAULT NULL,
+  `inactivo` BIT(1) DEFAULT b'0',
   PRIMARY KEY (`cedula`),
   UNIQUE KEY `UNIQUE` (`usuario`),
   KEY `fk_rol` (`id_roles`),
   CONSTRAINT `fk_cedula` FOREIGN KEY (`cedula`) REFERENCES `usuario_datos` (`cedula`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_roles` FOREIGN KEY (`id_roles`) REFERENCES `roles` (`id_roles`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*Data for the table `usuario` */
 
@@ -104,13 +105,13 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `usuario_avatar`;
 
 CREATE TABLE `usuario_avatar` (
-  `cedula` char(15) NOT NULL,
-  `id_avatar` tinyint(2) DEFAULT '1',
+  `cedula` CHAR(15) NOT NULL,
+  `id_avatar` TINYINT(2) DEFAULT '1',
   PRIMARY KEY (`cedula`),
   KEY `fk_avatar` (`id_avatar`),
   CONSTRAINT `fk_avatar` FOREIGN KEY (`id_avatar`) REFERENCES `avatar` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_cedula_avatar` FOREIGN KEY (`cedula`) REFERENCES `usuario_datos` (`cedula`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*Data for the table `usuario_avatar` */
 
@@ -123,13 +124,13 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `usuario_datos`;
 
 CREATE TABLE `usuario_datos` (
-  `cedula` char(15) NOT NULL,
-  `nombre` varchar(30) DEFAULT NULL,
-  `apellido` varchar(30) DEFAULT NULL,
-  `telefono` char(12) DEFAULT NULL,
-  `correo` varchar(30) DEFAULT NULL,
+  `cedula` CHAR(15) NOT NULL,
+  `nombre` VARCHAR(30) DEFAULT NULL,
+  `apellido` VARCHAR(30) DEFAULT NULL,
+  `telefono` CHAR(12) DEFAULT NULL,
+  `correo` VARCHAR(30) DEFAULT NULL,
   PRIMARY KEY (`cedula`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*Data for the table `usuario_datos` */
 
@@ -137,8 +138,31 @@ LOCK TABLES `usuario_datos` WRITE;
 
 UNLOCK TABLES;
 
+/* Procedure structure for procedure `sp_mostrar_usuarios` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `sp_mostrar_usuarios` */;
+
+DELIMITER $$
+
+/*!50003 CREATE PROCEDURE `sp_mostrar_usuarios`()
+BEGIN
+	SELECT
+	u.`cedula`,
+	u.`usuario`,
+	u.`id_roles`,
+	ud.`nombre`,
+	ud.`apellido`,
+	ud.`correo`,
+	ud.`telefono`,
+	a.`avatar`
+	FROM `usuario` AS u 
+	INNER JOIN `usuario_datos` AS ud ON ( ud.`cedula` = u.`cedula`)
+	INNER JOIN `usuario_avatar` AS ua ON (ua.`cedula` = u.`cedula`)
+	INNER JOIN `avatar` AS a ON (a.`id`= ua.`id_avatar`);
+    END */$$
+DELIMITER ;
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
