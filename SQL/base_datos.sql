@@ -65,7 +65,7 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `usuario`;
 
 CREATE TABLE `usuario` (
-  `cedula` varchar(15) NOT NULL,
+  `cedula` char(15) NOT NULL,
   `usuario` varchar(20) DEFAULT NULL,
   `clave` varchar(88) DEFAULT NULL,
   `id_roles` int(11) DEFAULT NULL,
@@ -88,9 +88,11 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `usuario_datos`;
 
 CREATE TABLE `usuario_datos` (
-  `cedula` varchar(15) NOT NULL,
+  `cedula` char(15) NOT NULL,
   `nombre` varchar(30) DEFAULT NULL,
   `apellido` varchar(30) DEFAULT NULL,
+  `telefono` char(12) DEFAULT NULL,
+  `correo` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`cedula`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
