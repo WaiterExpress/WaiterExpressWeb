@@ -86,9 +86,11 @@ CREATE TABLE `usuario` (
   `usuario` VARCHAR(20) DEFAULT NULL,
   `clave` VARCHAR(88) DEFAULT NULL,
   `id_roles` INT(11) DEFAULT NULL,
+  `token` VARCHAR(88) DEFAULT NULL,
   `inactivo` BIT(1) DEFAULT b'0',
   PRIMARY KEY (`cedula`),
   UNIQUE KEY `UNIQUE` (`usuario`),
+  UNIQUE KEY `Token` (`token`),
   KEY `fk_rol` (`id_roles`),
   CONSTRAINT `fk_cedula` FOREIGN KEY (`cedula`) REFERENCES `usuario_datos` (`cedula`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_roles` FOREIGN KEY (`id_roles`) REFERENCES `roles` (`id_roles`) ON DELETE NO ACTION ON UPDATE NO ACTION
