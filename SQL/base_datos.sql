@@ -42,6 +42,22 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+/*Table structure for table `avatar` */
+
+DROP TABLE IF EXISTS `avatar`;
+
+CREATE TABLE `avatar` (
+  `id` tinyint(4) NOT NULL AUTO_INCREMENT,
+  `avatar` varchar(10) DEFAULT 'avatar.png',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `avatar` */
+
+LOCK TABLES `avatar` WRITE;
+
+UNLOCK TABLES;
+
 /*Table structure for table `roles` */
 
 DROP TABLE IF EXISTS `roles`;
@@ -83,6 +99,25 @@ LOCK TABLES `usuario` WRITE;
 
 UNLOCK TABLES;
 
+/*Table structure for table `usuario_avatar` */
+
+DROP TABLE IF EXISTS `usuario_avatar`;
+
+CREATE TABLE `usuario_avatar` (
+  `cedula` char(15) NOT NULL,
+  `id_avatar` tinyint(2) DEFAULT '1',
+  PRIMARY KEY (`cedula`),
+  KEY `fk_avatar` (`id_avatar`),
+  CONSTRAINT `fk_avatar` FOREIGN KEY (`id_avatar`) REFERENCES `avatar` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_cedula_avatar` FOREIGN KEY (`cedula`) REFERENCES `usuario_datos` (`cedula`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `usuario_avatar` */
+
+LOCK TABLES `usuario_avatar` WRITE;
+
+UNLOCK TABLES;
+
 /*Table structure for table `usuario_datos` */
 
 DROP TABLE IF EXISTS `usuario_datos`;
@@ -106,3 +141,4 @@ UNLOCK TABLES;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
