@@ -9,6 +9,7 @@
 + Procesador con soporte SSE2
 + PHP ≥ 5.5.1
 + MySQL ≥ 5.1.0
++ [mysqld] max_allowed_packet = 256M
 + Apache HTTP server
 
 ## Envío de correcciones
