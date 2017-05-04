@@ -59,7 +59,7 @@ class saloneroControlador
     
     public function index()
     {
-    	$this->vista->titulo = "Inicio | DevFy Framework";
+    	$this->vista->titulo = "Salonero | Waiter Express";
     	$this->vista->render('modulos/head');
     }
 }

@@ -37,30 +37,19 @@
 
 namespace Controlador;
 
-use \Modelo\Home as Home;
 use \Vista\Plantilla as Plantilla;
 
-class homeControlador
+class apiControlador
 {
-    
-    private $home;
     private $vista;
     
     public function __construct()
     {
-        $this->home  = new Home();
-        $this->vista = new Plantilla();
+        $this->vista    = new Plantilla();
     }
     
-    public function __destruct()
-    {
-    	$this->vista->render('modulos/footer');
-    }
+    public function __destruct(){}
     
-    public function index()
-    {
-    	$this->vista->titulo = "Inicio | Waiter Express";
-    	$this->vista->render('modulos/head');
-    }
+    public function index(){}
 }
 ?>

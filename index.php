@@ -45,7 +45,7 @@ const VERSION = '1.0.0';
  * @since Version 1.0.0
  * @const Entorno de desarrollo
  */
-const ENTORNO_DESARROLLO = false;
+const ENTORNO_DESARROLLO = true;
 
 /**
  * @since Version 1.0.0
