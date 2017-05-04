@@ -66,8 +66,10 @@ CREATE TABLE `categoria` (
   `id` INT(11) NOT NULL,
   `id_restaurante` INT(11) DEFAULT NULL,
   `nombre` VARCHAR(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=INNODB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  KEY `fk_restaurante_cat` (`id_restaurante`),
+  CONSTRAINT `fk_restaurante_cat` FOREIGN KEY (`id_restaurante`) REFERENCES `restaurante` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `categoria` */
 
