@@ -58,6 +58,23 @@ LOCK TABLES `avatar` WRITE;
 
 UNLOCK TABLES;
 
+/*Table structure for table `categoria` */
+
+DROP TABLE IF EXISTS `categoria`;
+
+CREATE TABLE `categoria` (
+  `id` INT(11) NOT NULL,
+  `id_restaurante` INT(11) DEFAULT NULL,
+  `nombre` VARCHAR(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+/*Data for the table `categoria` */
+
+LOCK TABLES `categoria` WRITE;
+
+UNLOCK TABLES;
+
 /*Table structure for table `empleados_restaurante` */
 
 DROP TABLE IF EXISTS `empleados_restaurante`;
@@ -79,6 +96,25 @@ LOCK TABLES `empleados_restaurante` WRITE;
 
 UNLOCK TABLES;
 
+/*Table structure for table `foto_producto` */
+
+DROP TABLE IF EXISTS `foto_producto`;
+
+CREATE TABLE `foto_producto` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_producto` INT(11) DEFAULT NULL,
+  `foto` VARCHAR(30) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_id_producto_foto` (`id_producto`),
+  CONSTRAINT `fk_id_producto_foto` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+/*Data for the table `foto_producto` */
+
+LOCK TABLES `foto_producto` WRITE;
+
+UNLOCK TABLES;
+
 /*Table structure for table `foto_restaurante` */
 
 DROP TABLE IF EXISTS `foto_restaurante`;
@@ -96,7 +132,50 @@ LOCK TABLES `foto_restaurante` WRITE;
 
 UNLOCK TABLES;
 
+/*Table structure for table `menu` */
 
+DROP TABLE IF EXISTS `menu`;
+
+CREATE TABLE `menu` (
+  `id` INT(11) NOT NULL,
+  `id_restaurante` INT(11) DEFAULT NULL,
+  `id_producto` INT(11) DEFAULT NULL,
+  `estado` BIT(1) DEFAULT b'0',
+  PRIMARY KEY (`id`),
+  KEY `fk_id_producto_menu` (`id_producto`),
+  KEY `fk_id_restaurante_menu` (`id_restaurante`),
+  CONSTRAINT `fk_id_producto_menu` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_id_restaurante_menu` FOREIGN KEY (`id_restaurante`) REFERENCES `restaurante` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+/*Data for the table `menu` */
+
+LOCK TABLES `menu` WRITE;
+
+UNLOCK TABLES;
+
+/*Table structure for table `producto` */
+
+DROP TABLE IF EXISTS `producto`;
+
+CREATE TABLE `producto` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_cat` INT(11) DEFAULT NULL,
+  `codigo` CHAR(5) DEFAULT NULL,
+  `nombre` VARCHAR(45) DEFAULT NULL,
+  `descripcion` TEXT,
+  `precio` DECIMAL(10,0) DEFAULT NULL,
+  `excluyente` BIT(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_categoria` (`id_cat`),
+  CONSTRAINT `fk_categoria` FOREIGN KEY (`id_cat`) REFERENCES `categoria` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+/*Data for the table `producto` */
+
+LOCK TABLES `producto` WRITE;
+
+UNLOCK TABLES;
 
 /*Table structure for table `restaurante` */
 
