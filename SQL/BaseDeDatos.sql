@@ -284,6 +284,21 @@ CREATE TABLE `usuario_datos` (
 LOCK TABLES `usuario_datos` WRITE;
 
 UNLOCK TABLES;
+/* Procedure structure for procedure `sp_comprobar_login` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `sp_comprobar_login` */;
+
+DELIMITER $$
+
+/*!50003 CREATE PROCEDURE `sp_comprobar_login`(in ucorreo varchar(30), in uclave VARCHAR(88))
+BEGIN
+	SELECT
+	COUNT(*) AS login
+	FROM `usuario` u
+	INNER JOIN `usuario_datos` AS ud ON (ud.`cedula` = u.`cedula`)
+	WHERE ud.`correo`=ucorreo AND u.`clave`=uclave AND u.`inactivo`=1;
+    END */$$
+DELIMITER ;
 
 /* Procedure structure for procedure `sp_mostrar_usuarios` */
 
