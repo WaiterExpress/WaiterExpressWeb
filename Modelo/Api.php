@@ -26,34 +26,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package DevfyFramework
- * @author  Luis Cortes | DevFy
- * @copyright   Copyright (c) 2017, DevFy. (http://www.devfy.net/)
- * @license http://opensource.org/licenses/MIT  MIT License
- * @link    http://www.devfy.net
- * @since   Version 1.0.0
+ * @package	DevfyFramework
+ * @author	Luis Cortes | DevFy
+ * @copyright	Copyright (c) 2017, DevFy. (http://www.devfy.net/)
+ * @license	http://opensource.org/licenses/MIT	MIT License
+ * @link	http://www.devfy.net
+ * @since	Version 1.0.0
  * @filesource
  */
 
-namespace Controlador;
+namespace Modelo;
 
-use \Vista\Plantilla as Plantilla;
-
-class apiControlador
+class Api
 {
-    private $vista;
-    
-    public function __construct()
-    {
-        $this->vista    = new Plantilla();
-    }
-    
-    public function __destruct(){}
-    
-    public function index(){}
 
-    public function Login(){
-        
+	private $con;
+
+	public function __construct(){
+		$this->con = new Conexion();
+	}
+
+	public function set($atributo, $contenido){
+		$this->$atributo = $contenido;
+	}
+
+	public function get($atributo){
+		return $this->$atributo;
+	}
+
+    public function ComprobarLogin($correo, $clave){
+        $comprobar_cuenta = $this->con->ConsultaRetorno("CALL `sp_comprobar_login`('{$correo}','{$clave}')");
+        return $comprobar_cuenta;
     }
 }
 ?>
