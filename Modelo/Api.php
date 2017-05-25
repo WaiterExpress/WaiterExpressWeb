@@ -47,7 +47,7 @@ class Api
 
 	public function __construct(){
 		$this->con 		= new Conexion();
-        $this->crypt 	= new Encriptacion();
+		$this->crypt 	= new Encriptacion();
 	}
 
 	public function set($atributo, $contenido){
@@ -58,10 +58,10 @@ class Api
 		return $this->$atributo;
 	}
 
-    public function ComprobarLogin($correo, $clave){
+	public function ComprobarLogin($correo, $clave){
 		$hash  = $this->crypt->encrypt_decrypt('encrypt', $clave);
-        $comprobar_cuenta = $this->con->ConsultaRetorno("CALL `sp_comprobar_login`('{$correo}','{$hash}')");
-        return $comprobar_cuenta;
-    }
+		$comprobar_cuenta = $this->con->ConsultaRetorno("CALL `sp_comprobar_login`('{$correo}','{$hash}')");
+		return $comprobar_cuenta;
+	}
 }
 ?>
