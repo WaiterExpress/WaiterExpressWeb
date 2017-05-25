@@ -37,13 +37,17 @@
 
 namespace Modelo;
 
+use \Ayudante\Encriptacion as Encriptacion;
+
 class Api
 {
 
 	private $con;
+	private $crypt;
 
 	public function __construct(){
-		$this->con = new Conexion();
+		$this->con 		= new Conexion();
+        $this->crypt 	= new Encriptacion();
 	}
 
 	public function set($atributo, $contenido){
@@ -55,7 +59,8 @@ class Api
 	}
 
     public function ComprobarLogin($correo, $clave){
-        $comprobar_cuenta = $this->con->ConsultaRetorno("CALL `sp_comprobar_login`('{$correo}','{$clave}')");
+		$hash  = $this->crypt->encrypt_decrypt('encrypt', $clave);
+        $comprobar_cuenta = $this->con->ConsultaRetorno("CALL `sp_comprobar_login`('{$correo}','{$hash}')");
         return $comprobar_cuenta;
     }
 }
