@@ -38,22 +38,37 @@
 namespace Controlador;
 
 use \Vista\Plantilla as Plantilla;
+use \Modelo\Api as Api;
+use \Ayudante\Filtro as Filtro;
 
 class apiControlador
 {
     private $vista;
+    private $api;
+    private $filtro;
     
     public function __construct()
     {
         $this->vista    = new Plantilla();
+        $this->api      = new Api();
+        $this->filtro   = new Filtro();
     }
     
     public function __destruct(){}
     
     public function index(){}
 
+    /**
+     * Formato de envio
+     * @url: midominio.com/api/login?correo=luis@midomicio.com&clave=miclave
+     */
     public function Login(){
-        
+        $this->vista->titulo = "Inicio | Comprobar Usuario";
+        if ($_GET) {
+            $this->api->set("correo", $this->filtro->Filtrar($_GET['correo'], 'string'));
+            $this->api->set("clave", $this->filtro->Filtrar($_GET['clave'], 'string'));
+            $this->api->ComprobarLogin();
+        }
     }
 }
 ?>

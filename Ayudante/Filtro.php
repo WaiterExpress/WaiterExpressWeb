@@ -34,38 +34,28 @@
  * @since	Version 1.0.0
  * @filesource
  */
+namespace Ayudante;
 
-namespace Modelo;
+class Filtro{
 
-use \Ayudante\Encriptacion as Encriptacion;
-
-class Api
-{
-
-	private $con;
-	private $crypt;
-    private $hash;
-	private $correo;
-	private $clave;
-
-	public function __construct(){
-		$this->con		= new Conexion();
-		$this->crypt	= new Encriptacion();
-	}
-
-	public function set($atributo, $contenido){
-		$this->$atributo = $contenido;
-	}
-
-	public function get($atributo){
-		return $this->$atributo;
-	}
-
-	public function ComprobarLogin(){
-		$this->hash		= $this->crypt->encrypt_decrypt('encrypt', $this->clave);
-		$this->login	= $this->con->ConsultaRetorno("CALL `sp_comprobar_login`('{$this->correo}','{$this->hash}')");
-		$this->row		= $this->login->fetch_array();
-		echo $this->row['login'];
-	}
+    private $tipo;
+    private $input;
+	
+    public static function Filtrar($input, $tipo = 'string')
+	{
+        switch ($tipo) {
+            case 'string':
+                return filter_var($input, FILTER_SANITIZE_STRING);
+                break;
+            case 'int':
+                return filter_var($input, FILTER_VALIDATE_INT);
+                break;
+            case 'correo':
+                return filter_var($input, FILTER_VALIDATE_EMAIL);
+                break;
+            default:
+                return filter_var($input, FILTER_SANITIZE_STRING);
+                break;
+        }
+    }
 }
-?>
