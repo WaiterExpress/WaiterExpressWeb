@@ -50,7 +50,6 @@ class appControlador
     
     public function __destruct()
     {
-    	$this->vista->render('modulos/footer');
     }
 
     public function index()
@@ -58,7 +57,7 @@ class appControlador
     	$this->vista->titulo = "Iniciar Sesión | " . APPNAME;
     	$this->vista->render('modulos/head.login');
         $this->vista->render('app/index');
-        $this->vista->render('modulos/footer');
+    	$this->vista->render('modulos/footer.login');
     }
     
     public function Salonero()

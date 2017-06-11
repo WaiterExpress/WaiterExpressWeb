@@ -92,7 +92,7 @@ const CSS = URL . 'estatico/css/';
  * @since Version 1.0.0
  * @const JS Directorio
  */
-const JS = URL . '';
+const JS = URL . 'estatico/js/';
 
 /**
  * @since Version 1.0.0
