@@ -59,7 +59,7 @@ class Core
 			error_reporting(E_ALL);
 			ini_set('display_errors','Off');
 			ini_set('log_errors', 'On');
-			ini_set('error_log', LOGERROR.'error.log');
+			ini_set('error_log', 'error.log');
 		}else{
 			error_reporting(E_ALL);
 			ini_set('display_errors','Off');

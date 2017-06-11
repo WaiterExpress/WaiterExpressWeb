@@ -37,7 +37,7 @@
 
 namespace Modelo;
 
-class Salonero
+class App
 {
 
 	private $con;

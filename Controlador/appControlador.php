@@ -39,7 +39,7 @@ namespace Controlador;
 
 use \Vista\Plantilla as Plantilla;
 
-class usuarioControlador
+class appControlador
 {
     private $vista;
     
@@ -52,40 +52,42 @@ class usuarioControlador
     {
     	$this->vista->render('modulos/footer');
     }
-    
+
     public function index()
     {
-    	$this->vista->titulo = "Usuarios | WaiterExpress";
-    	$this->vista->render('modulos/head');
+    	$this->vista->titulo = "Iniciar Sesión | " . APPNAME;
+    	$this->vista->render('modulos/head.login');
+        $this->vista->render('app/index');
+        $this->vista->render('modulos/footer');
     }
     
     public function Salonero()
     {
-    	$this->vista->titulo = "Salonero | WaiterExpress";
+    	$this->vista->titulo = "Salonero | " . APPNAME;
     	$this->vista->render('modulos/head');
     }
     
     public function Cocinero()
     {
-    	$this->vista->titulo = "Cocinero | DevFy Framework";
+    	$this->vista->titulo = "Cocinero | " . APPNAME;
     	$this->vista->render('modulos/head');
     }
     
     public function Cliente()
     {
-    	$this->vista->titulo = "Cliente | WaiterExpress";
+    	$this->vista->titulo = "Cliente | " . APPNAME;
     	$this->vista->render('modulos/head');
     }
     
     public function GerenteRestaurante()
     {
-    	$this->vista->titulo = "Gerente | WaiterExpress";
+    	$this->vista->titulo = "Gerente | " . APPNAME;
     	$this->vista->render('modulos/head');
     }
     
     public function Administrador()
     {
-    	$this->vista->titulo = "Administrador | WaiterExpress";
+    	$this->vista->titulo = "Administrador | " . APPNAME;
     	$this->vista->render('modulos/head');
     }
 }

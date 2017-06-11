@@ -57,13 +57,18 @@ const DS = DIRECTORY_SEPARATOR;
  * @since Version 1.0.0
  * @const Controlador por defecto
  */
-const CONTROLADOR_DEFECTO = 'home';
+const CONTROLADOR_DEFECTO = 'app';
 
 /**
  * @since Version 1.0.0
  * @const Metodo por defecto del Controlador
  */
 const ACCION_DEFECTO = 'index';
+/**
+ * @since Version 1.0.0
+ * @const APPNAME
+ */
+const APPNAME = 'WaiterExpress';
 
 /**
  * @since Version 1.0.0
@@ -75,13 +80,13 @@ const URL = '';
  * @since Version 1.0.0
  * @const IMG Directorio
  */
-const IMG = URL . '';
+const IMG = URL . 'estatico/img/';
 
 /**
  * @since Version 1.0.0
  * @const CSS Directorio
  */
-const CSS = URL . '';
+const CSS = URL . 'estatico/css/';
 
 /**
  * @since Version 1.0.0
@@ -123,7 +128,6 @@ ini_set('session.use_only_cookies', 1);
 date_default_timezone_set('America/Costa_Rica');
 
 require_once "Config/Autoload.php";
-\Config\Autoload::run();
-\Config\Enrutador::run(new Config\Request());
-\Ayudante\Core::ReportarError();
+Config\Autoload::run();
+Config\Enrutador::run(new Config\Request());
 ?>

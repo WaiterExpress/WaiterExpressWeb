@@ -64,7 +64,7 @@ class Api
 	public function ComprobarLogin(){
 		$this->hash		= $this->crypt->encrypt_decrypt('encrypt', $this->clave);
 		$this->login	= $this->con->ConsultaRetorno("CALL `sp_comprobar_login`('{$this->correo}','{$this->hash}')");
-		$this->row		= $this->login->fetch_array();
+		$this->row		= $this->login->fetch_assoc();
 		echo $this->row['login'];
 	}
 }
