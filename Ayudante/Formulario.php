@@ -41,14 +41,22 @@ class Formulario
 {
 	public $controles = array();
 
-	public function Input($name, $type, $clase, $placeholder='Ingrese la información requerida' ,$required = false, $message = "Este campo es requerido.")
+	public function Input($name, $type='text', $clase='form-control', $placeholder='Ingrese la información requerida' ,$required = false, $message = "Este campo es requerido.")
 	{
-		$input = '<input type="text" name="' . $name . '" class="'.$clase.'" placeholder="'.$placeholder.'" data-required="' . ($required ? "true" : "false") . '" data-message="" />';
+		$input = '<input type="'.$type.'" name="'.$name.'" class="'.$clase.'" placeholder="'.$placeholder.'" data-required="' . ($required ? "true" : "false") . '" data-message="" />';
 		$controles[$name] = array($required, $message);
 
 		return $input;
 	}
-    
+
+    public function TextArea($name, $id = 'textarea', $clase='form-control', $rows = 5, $placeholder='Ingrese la información requerida', $required = false, $message = "Este campo es requerido.")
+    {
+        $textarea = '<textarea name="'.$name.'" class="'.$clase.'" rows="'.$rows.'" id="'.$id.'" placeholder="'.$placeholder.'" data-required="' . ($required ? "true" : "false") . '" data-message=""></textarea>';
+		$controles[$name] = array($required, $message);
+
+        return $textarea;
+    }
+
 	public function ShowError($name)
 	{
 		return $controles[$name][1];
