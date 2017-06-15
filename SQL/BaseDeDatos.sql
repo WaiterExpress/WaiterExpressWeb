@@ -370,6 +370,7 @@ CREATE TABLE `usuario` (
   `usuario` VARCHAR(20) DEFAULT NULL,
   `clave` VARCHAR(88) DEFAULT NULL,
   `id_roles` TINYINT(2) DEFAULT NULL,
+  `log_externo` bit(1) DEFAULT b'0',
   `token` VARCHAR(88) DEFAULT NULL,
   `inactivo` BIT(1) DEFAULT b'0',
   PRIMARY KEY (`cedula`),
