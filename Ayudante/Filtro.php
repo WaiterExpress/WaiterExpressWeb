@@ -40,6 +40,10 @@ class Filtro{
 
     private $tipo;
     private $input;
+    private $texto;
+    private $numeros;
+    private $correo;
+    private $error;
 	
     public static function Filtrar($input, $tipo = 'string')
 	{
@@ -56,6 +60,36 @@ class Filtro{
             default:
                 return filter_var($input, FILTER_SANITIZE_STRING);
                 break;
+        }
+    }
+
+    public static function ValidarTexto ($texto, $error='')
+    {
+        if (trim($texto)=='' || !preg_match("/^[a-zA-Z\ ]+$/", $texto)) {
+            echo "<script type='text/javascript'> alert('$error'); history.back(); </script>";
+                return false;
+        }else{
+            return true;
+        }
+    }
+
+    public static function ValidarNumeros ($numeros, $error='')
+    {
+        if (trim($numeros)=='' || !preg_match("/^[0-9]+$/", $numeros)) {
+            echo "<script type='text/javascript'> alert('$error'); history.back(); </script>";
+                return false;
+        }else{
+            return true;
+        }
+    }
+
+    public static function ValidarCorreo ($correo, $error='')
+    {
+        if (trim($correo)=='' || !preg_match("/^[a-zA-Z0-9\._-]+@[a-zA-Z0-9]+\.[a-zA-Z]+$/", trim($correo))) {
+            echo "<script type='text/javascript'> alert('$error'); history.back(); </script>";
+                return false;
+        }else{
+            return true;
         }
     }
 }
