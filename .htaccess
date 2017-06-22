@@ -33,6 +33,10 @@
 # @filesource
 #
 
+# Bloquea la vista a las carpetas
+Options -Indexes
+DirectoryIndex index.php
+
 RewriteEngine on
 
 RewriteCond %{REQUEST_FILENAME} !-d
