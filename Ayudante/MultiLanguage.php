@@ -39,7 +39,8 @@ namespace Ayudante;
 
 class MultiLanguage
 {
-	public $file = 'language.txt';
+	private $file = 'language.txt';
+	private $idioma = 'es';
 
 	public function __construct()
 	{
@@ -48,10 +49,10 @@ class MultiLanguage
 		 */
 		if(!isset($_SESSION['language']) || $_SESSION['language']=="")
 		{
-			$_SESSION['language']="en";
+			$_SESSION['language']= $this->idioma;
 		}
-
-		$language_array = array("en","es","fr");
+		
+		$language_array = array("en","es");
 
 		if(isset($_GET['language']) && $_GET['language']!="" && in_array($_GET['language'], $language_array))
 		{
@@ -59,21 +60,22 @@ class MultiLanguage
 		}
 
 		/**
-		 * Agregar nuevas plabras al archivo
+		 * Agregar nuevas palabras al archivo
 		 */
 		if(isset($_POST['update_language']))
 		{
 			$this->WriteLanguageFile();			
 		}
 		$this->ReadLanguageFile();
+		
 	}
 
 	private function WriteLanguageFile()
 	{
-		$current="";
+		$current = "";
 		for ($i=0; $i <count($_POST['en']) ; $i++) { 
-			if($_POST['en'][$i]!="" && $_POST['es'][$i]!="" && $_POST['fr'][$i]!="") {
-				$current.=$_POST['en'][$i]."#@#".$_POST['es'][$i]."#@#".$_POST['fr'][$i]."\n";
+			if($_POST['en'][$i] != "" && $_POST['es'][$i] != "") {
+				$current.=$_POST['en'][$i]."#@#".$_POST['es'][$i]."\n";
 			}
 		}
 		file_put_contents($this->file, $current);
@@ -86,29 +88,34 @@ class MultiLanguage
 
 		$array = explode("\n",$filecontent);
 
-		foreach($array as $key=>$value)
+		foreach($array as $key => $value)
 		{
 			$string_array = explode("#@#",$value);
 			$this->language_array[$string_array[0]] = $string_array;
 		}
 	}
 
-	public function LanguageString($string,$language="")
+	public function Lang($string, $valor="", $language="")
 	{
-		if($language=="") {$language=$_SESSION['language'];}
+		if($language == "") {
+			$language = $_SESSION['language'];
+		}
 		
-		if($language=="en")
+		if($language == "en")
 		{
-			echo $this->language_array[$string][0];	
+			echo sprintf(_($this->language_array[$string][0]), $valor);	
 		}
-		else if($language=="es")
+		else if($language == "es")
 		{
-			echo $this->language_array[$string][1];	
+			echo sprintf(_($this->language_array[$string][1]), $valor);	
+		}else{
+			echo sprintf(_($this->language_array[$string][0]), $valor);	
 		}
-		else if($language=="fr")
-		{
-			echo $this->language_array[$string][2];	
-		}
+	}
+
+	public function CambiarIdioma($idioma){
+		$url = URL.'?language='.$idioma;
+		return $url;
 	}
 }
 ?>
