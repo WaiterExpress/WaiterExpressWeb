@@ -39,17 +39,20 @@ namespace Controlador;
 
 use \Modelo\Home as Home;
 use \Vista\Plantilla as Plantilla;
+use \Modelo\Usuario as Usuario;
 
 class homeControlador
 {
     
     private $home;
     private $vista;
+    private $usuario;
     
     public function __construct()
     {
         $this->home  = new Home();
         $this->vista = new Plantilla();
+        $this->usuario = new Usuario();
     }
     
     public function __destruct()
@@ -61,6 +64,7 @@ class homeControlador
     {
     	$this->vista->titulo = "Inicio | Waiter Express";
     	$this->vista->render('modulos/head');
+        $this->vista->datos =  $this->usuario->isLogin();
     }
 }
 ?>
