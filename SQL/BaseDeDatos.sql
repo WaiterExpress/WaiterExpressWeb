@@ -98,65 +98,6 @@ LOCK TABLES `empleados_restaurante` WRITE;
 
 UNLOCK TABLES;
 
-/*Table structure for table `excluyente` */
-
-DROP TABLE IF EXISTS `excluyente`;
-
-CREATE TABLE `excluyente` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(25) DEFAULT NULL,
-  `estado` BIT(1) DEFAULT b'1',
-  PRIMARY KEY (`id`)
-) ENGINE=INNODB DEFAULT CHARSET=utf8;
-
-/*Data for the table `excluyente` */
-
-LOCK TABLES `excluyente` WRITE;
-
-UNLOCK TABLES;
-
-/*Table structure for table `excluyente_categoria` */
-
-DROP TABLE IF EXISTS `excluyente_categoria`;
-
-CREATE TABLE `excluyente_categoria` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(35) DEFAULT NULL,
-  `estado` BIT(1) DEFAULT b'0',
-  PRIMARY KEY (`id`)
-) ENGINE=INNODB DEFAULT CHARSET=utf8;
-
-/*Data for the table `excluyente_categoria` */
-
-LOCK TABLES `excluyente_categoria` WRITE;
-
-UNLOCK TABLES;
-
-/*Table structure for table `excluyente_relacion` */
-
-DROP TABLE IF EXISTS `excluyente_relacion`;
-
-CREATE TABLE `excluyente_relacion` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `id_producto` INT(11) DEFAULT NULL,
-  `id_excluyente` INT(11) DEFAULT NULL,
-  `id_categoria` INT(11) DEFAULT NULL,
-  `estado` BIT(1) DEFAULT b'0',
-  PRIMARY KEY (`id`),
-  KEY `fk_id_producto_excluyente` (`id_producto`),
-  KEY `fk_id_excluyente` (`id_excluyente`),
-  KEY `fk_id_excluyente_categoria` (`id_categoria`),
-  CONSTRAINT `fk_id_excluyente` FOREIGN KEY (`id_excluyente`) REFERENCES `excluyente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_id_excluyente_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `excluyente_categoria` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_id_producto_excluyente` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=INNODB DEFAULT CHARSET=utf8;
-
-/*Data for the table `excluyente_relacion` */
-
-LOCK TABLES `excluyente_relacion` WRITE;
-
-UNLOCK TABLES;
-
 /*Table structure for table `foto_producto` */
 
 DROP TABLE IF EXISTS `foto_producto`;
@@ -358,6 +299,87 @@ CREATE TABLE `roles` (
 LOCK TABLES `roles` WRITE;
 
 INSERT  INTO `roles`(`id_roles`,`rol`) VALUES (0,'Administrador'),(1,'Gerente Restaurante'),(2,'Cocinero'),(3,'Salonero'),(4,'Cliente');
+
+UNLOCK TABLES;
+
+/*Table structure for table `submenu_categoria` */
+
+DROP TABLE IF EXISTS `submenu_categoria`;
+
+CREATE TABLE `submenu_categoria` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(35) DEFAULT NULL,
+  `submenu_tipo` tinyint(2) DEFAULT NULL,
+  `estado` bit(1) DEFAULT b'0',
+  PRIMARY KEY (`id`),
+  KEY `fk_submenu_tipo` (`submenu_tipo`),
+  CONSTRAINT `fk_submenu_tipo` FOREIGN KEY (`submenu_tipo`) REFERENCES `submenu_tipo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+/*Data for the table `submenu_categoria` */
+
+LOCK TABLES `submenu_categoria` WRITE;
+
+UNLOCK TABLES;
+
+/*Table structure for table `submenu_items` */
+
+DROP TABLE IF EXISTS `submenu_items`;
+
+CREATE TABLE `submenu_items` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(25) DEFAULT NULL,
+  `estado` bit(1) DEFAULT b'1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `submenu_items` */
+
+LOCK TABLES `submenu_items` WRITE;
+
+UNLOCK TABLES;
+
+/*Table structure for table `submenu_relacion` */
+
+DROP TABLE IF EXISTS `submenu_relacion`;
+
+CREATE TABLE `submenu_relacion` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_producto` int(11) DEFAULT NULL,
+  `id_submenu_items` int(11) DEFAULT NULL,
+  `id_categoria` int(11) DEFAULT NULL,
+  `estado` bit(1) DEFAULT b'0',
+  PRIMARY KEY (`id`),
+  KEY `fk_id_producto_excluyente` (`id_producto`),
+  KEY `fk_id_excluyente` (`id_submenu_items`),
+  KEY `fk_id_excluyente_categoria` (`id_categoria`),
+  CONSTRAINT `fk_id_excluyente` FOREIGN KEY (`id_submenu_items`) REFERENCES `submenu_items` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_id_excluyente_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `submenu_categoria` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_id_producto_excluyente` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*Data for the table `submenu_relacion` */
+
+LOCK TABLES `submenu_relacion` WRITE;
+
+UNLOCK TABLES;
+
+/*Table structure for table `submenu_tipo` */
+
+DROP TABLE IF EXISTS `submenu_tipo`;
+
+CREATE TABLE `submenu_tipo` (
+  `id` tinyint(2) NOT NULL AUTO_INCREMENT,
+  `tipo` varchar(35) DEFAULT NULL,
+  `estado` bit(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+/*Data for the table `submenu_tipo` */
+
+LOCK TABLES `submenu_tipo` WRITE;
+
+insert  into `submenu_tipo`(`id`,`tipo`,`estado`) values (1,'Excluyente',''),(2,'Incluyente','');
 
 UNLOCK TABLES;
 
