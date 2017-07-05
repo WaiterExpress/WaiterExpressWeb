@@ -74,7 +74,7 @@ const APPNAME = 'WaiterExpress';
  * @since Version 1.0.0
  * @const URL base
  */
-const URL = '';
+const URL = 'http://localhost/restaurante/';
 
 /**
  * @since Version 1.0.0

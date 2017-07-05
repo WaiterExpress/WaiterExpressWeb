@@ -69,7 +69,9 @@ class appControlador
     public function Cocinero()
     {
     	$this->vista->titulo = "Cocinero | " . APPNAME;
-    	$this->vista->render('modulos/head');
+    	$this->vista->render('modulos/head.cocinero');
+    	$this->vista->render('app/cocinero');
+    	$this->vista->render('modulos/footer');
     }
     
     public function Cliente()
