@@ -41,11 +41,11 @@ use \Vista\Plantilla as Plantilla;
 use \Ayudante\Url as Url;
 use \Modelo\Usuario as Usuario;
 
-class appControlador
+class usuarioControlador
 {
-    private $usuario;
     private $vista;
     private $url;
+	private $usuario;
     
     public function __construct()
     {
@@ -59,40 +59,21 @@ class appControlador
     {
     }
 
-    public function Index(){
-        $this->vista->datos =  $this->usuario->isLogin();
-    }
-    
-    public function Salonero()
+    public function Ingresar()
     {
-    	$this->vista->titulo = "Salonero | " . APPNAME;
-    	$this->vista->render('modulos/head');
+    	$this->vista->titulo = "Iniciar Sesión | " . APPNAME;
+    	$this->vista->render('modulos/head.login');
+        if ($_POST) {
+            $this->usuario->set("email", filter_var($_POST['email']));
+            $this->usuario->set("clave", filter_var($_POST['clave']));
+            $this->usuario->ComprobarUsuario();
+        }
+        $this->vista->render('usuario/ingresar');
+    	$this->vista->render('modulos/footer.login');
     }
-    
-    public function Cocinero()
-    {
-    	$this->vista->titulo = "Cocinero | " . APPNAME;
-    	$this->vista->render('modulos/head.cocinero');
-    	$this->vista->render('app/cocinero');
-    	$this->vista->render('modulos/footer');
-    }
-    
-    public function Cliente()
-    {
-    	$this->vista->titulo = "Cliente | " . APPNAME;
-    	$this->vista->render('modulos/head');
-    }
-    
-    public function Gerente()
-    {
-    	$this->vista->titulo = "Gerente | " . APPNAME;
-    	$this->vista->render('modulos/head');
-    }
-    
-    public function Administrador()
-    {
-    	$this->vista->titulo = "Administrador | " . APPNAME;
-    	$this->vista->render('modulos/head');
+
+    public function Cerrar(){
+        $this->usuario->CierreSesion();
     }
 }
 ?>

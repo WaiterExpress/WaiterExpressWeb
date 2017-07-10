@@ -23,10 +23,10 @@ $('#loginForm').bootstrapValidator({
         clave: {
             validators: {
                 notEmpty: {
-                    message: 'La contraseña es requerida'
+                    message: 'La contrase&ntilde;a es requerida'
                 },
                 stringLength: {
-                    min: 8,
+                    min: 3,
                     message: 'La clave debe contener al menos 8 caracteres'
                 }
             }

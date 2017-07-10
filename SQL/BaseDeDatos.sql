@@ -446,6 +446,34 @@ CREATE TABLE `usuario_datos` (
 LOCK TABLES `usuario_datos` WRITE;
 
 UNLOCK TABLES;
+
+/* Procedure structure for procedure `sp_buscar_usuario` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `sp_buscar_usuario` */;
+
+DELIMITER $$
+
+/*!50003 CREATE PROCEDURE `sp_buscar_usuario`(IN usere VARCHAR(15))
+BEGIN
+SELECT
+u.cedula,
+u.usuario,
+u.`token`,
+ud.`correo`,
+ud.`telefono`,
+ud.nombre,
+ud.apellido,
+r.id_roles,
+r.rol,
+u.`inactivo`
+FROM usuario AS u
+INNER JOIN roles r ON (r.id_roles = u.id_roles)
+INNER JOIN `usuario_datos` AS ud ON (ud.`cedula` = u.`cedula`)
+WHERE
+(usere IS NULL OR ud.`correo` = usere);
+    END */$$
+DELIMITER ;
+
 /* Procedure structure for procedure `sp_comprobar_login` */
 
 /*!50003 DROP PROCEDURE IF EXISTS  `sp_comprobar_login` */;
@@ -455,7 +483,8 @@ DELIMITER $$
 /*!50003 CREATE PROCEDURE `sp_comprobar_login`(in ucorreo varchar(30), in uclave VARCHAR(88))
 BEGIN
 	SELECT
-	COUNT(*) AS login
+	COUNT(*) AS login,
+	u.id_roles
 	FROM `usuario` u
 	INNER JOIN `usuario_datos` AS ud ON (ud.`cedula` = u.`cedula`)
 	WHERE ud.`correo`=ucorreo AND u.`clave`=uclave AND u.`inactivo`=1;

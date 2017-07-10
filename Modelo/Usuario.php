@@ -36,6 +36,8 @@
  */
 
 namespace Modelo;
+use \Ayudante\Encriptacion as Encriptacion;
+use \Ayudante\Url as Url;
 
 class Usuario
 {
@@ -47,10 +49,17 @@ class Usuario
 	private $apellidos;
 	private $correo;
 	private $con;
+    private $hash;
+	private $crypt;
+	private $email;
+	private $url;
 
-	public function __construct(){
- 		if (!isset($_SESSION)) session_start();
-		$this->con = new Conexion();
+	public function __construct()
+	{
+        if (!isset($_SESSION)) session_start();
+        $this->con    	= new Conexion();
+        $this->crypt 	= new Encriptacion();
+        $this->url 		= new Url();
 	}
 
 	public function set($atributo, $contenido){
@@ -61,33 +70,43 @@ class Usuario
 		return $this->$atributo;
 	}
 
-	public function Encriptacion($Usuario, $Contrasena){
-		$Salt 		= '$q%or@x&klmn#=0y1z2u34v5t678p9sw';
-		$UserFilter	= strtoupper($Usuario);
-		$User		= filter_var($UserFilter, FILTER_SANITIZE_STRING);
-		$PassFilter	= strtoupper($Contrasena);
-		$Pass		= filter_var($PassFilter, FILTER_SANITIZE_STRING);
-		$Signo		= ':+';
-		$PassHash	= serialize($User.$Signo.$Pass);
-		$Password 	= hash('sha256', $Salt.$PassHash);
-		$mac 		= hash_hmac('sha256', $Password, substr(bin2hex($Salt), -32));
-		$base64 	= base64_encode($mac);
-		return $base64;
-	}
-
-	public function ComprobarUsuario(){
-		$this->usuario 	= filter_var($this->usuario, FILTER_SANITIZE_STRING);
-		$this->clave 	= filter_var($this->clave, FILTER_SANITIZE_STRING);
-		$this->clave  	= $this->Encriptacion($this->usuario, $this->clave);
-		$datos 	= $this->con->ConsultaRetorno("CALL `sp_comprobar_usuario`('{$this->usuario}', '{$this->clave}')");
-		$row 	= $datos->fetch_array();
-		if($row['mensaje'] == 1){
-			$_SESSION['usuario'] =  isset($this->usuario) ? $this->usuario : null;
-			header("Location:". URL . "home" );
-			exit;
+	public function ComprobarUsuario()
+	{
+        $this->hash  	= $this->crypt->encrypt_decrypt('encrypt', filter_var($this->clave, FILTER_SANITIZE_STRING));
+		$datos 			= $this->con->ConsultaRetorno("CALL `sp_comprobar_login`('{$this->email}', '{$this->hash}')");
+		$row   			= $datos->fetch_array();
+		if($row['login'] == 1){
+			$_SESSION['usuario'] =  isset($this->email) ? $this->email : null;
+			switch ($row['id_roles']) {
+				case 0:
+					header("Location:". $this->url->UrlBase('app/admin'));
+					exit;
+					break;
+				case 1:
+					header("Location:". $this->url->UrlBase('app/gerente'));
+					exit;
+					break;
+				case 2:
+					header("Location:". $this->url->UrlBase('app/cocinero'));
+					exit;
+					break;
+				case 3:
+					header("Location:". $this->url->UrlBase('app/salonero'));
+					exit;
+					break;
+				case 4:
+					header("Location:". $this->url->UrlBase('app/cliente'));
+					exit;
+					break;
+				
+				default:
+					header("Location: https://wwww.google.com" );
+					exit;
+					break;
+			}
 		}else{
 			echo '<div class="alert alert-danger" role="alert">
-            <strong>&iexcl;Hay un problema!</strong> El usuario es incorrecto o no haz activado la cuenta de usuario.
+            <strong>&iexcl;Hay un problema!</strong> El usuario o la contrase&ntilde;a son incorrectas o su cuenta de usuario no ha sido activada.
           </div>';
 		}
 	}
@@ -116,43 +135,46 @@ class Usuario
 	}
 
 	public function LoginDatos(){
-		$sql 			= "CALL `sp_datos_persona`('{$_SESSION['usuario']}')";
+		$sql 			= "CALL `sp_buscar_usuario`('{$_SESSION['usuario']}')";
 		$datos 			= $this->con->ConsultaRetorno($sql);
 		$usuario		= $datos->fetch_assoc();
 		return $usuario;
 	}
 
-	public function SesionExiste(){
-		
-		// La sesion no puede estar vacia
-		if(empty($_SESSION['usuario'])){
-			header("Location: ". URL );
-			exit();
-		}
-
-		// Regenerar los identificadores de sesión para sesiones nuevas
-		if (isset($_SESSION['mark']) === false){
-			session_regenerate_id(true);
-			$_SESSION['mark'] = true;
-		}
-	}
+    public function SesionExiste()
+    {
+        
+        // La sesion no puede estar vacia
+        if (empty($_SESSION['usuario'])) {
+            header("Location: " . URL . "usuario/ingresar/");
+            exit();
+        }
+        
+        // Regenerar los identificadores de sesión para sesiones nuevas
+        if (isset($_SESSION['mark']) === false) {
+            session_regenerate_id(true);
+            $_SESSION['mark'] = true;
+        }
+    }
 
 	public function isLoginSesionUsuario(){
         if (isset($_SESSION['usuario'])) {
-            header("Location: ". URL);
+            header("Location: ". URL.'usuario/ingresar/');
         }
 	}
 
-	public function ComprobarSesion(){
-		// La sesion no puede estar vacia
-		if(empty($_SESSION['usuario'])){
-			return true;
-		}
-	}
+    public function ComprobarSesion()
+    {
+        // La sesion no puede estar vacia
+        if (empty($_SESSION['usuario'])) {
+            return true;
+        }
+    }
 
-	public function isLogin(){
-		$this->SesionExiste();
-		$datos = $this->LoginDatos();
-		return $datos;
-	}
+    public function isLogin()
+    {
+        $this->SesionExiste();
+        $datos = $this->LoginDatos();
+        return $datos;
+    }
 }
