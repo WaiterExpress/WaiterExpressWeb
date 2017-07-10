@@ -69,11 +69,13 @@ class Conexion{
 		trigger_error('La clonación de este objeto no está permitida', E_USER_ERROR);
 	}
 
-	public function ConsultaSimple($sql){
+	public function ConsultaSimple($sql)
+	{
 		$this->con->query($sql);
 	}
 
-	public function ConsultaRetorno($sql){
+	public function ConsultaRetorno($sql)
+	{
 		$datos = $this->con->query($sql);
 		return $datos;
 	}
