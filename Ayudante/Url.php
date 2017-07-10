@@ -26,49 +26,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @package DevfyFramework
- * @author  Luis Cortes | DevFy
- * @copyright   Copyright (c) 2017, DevFy. (http://www.devfy.net/)
- * @license http://opensource.org/licenses/MIT  MIT License
- * @link    http://www.devfy.net
- * @since   Version 1.0.0
+ * @package	DevfyFramework
+ * @author	Luis Cortes | DevFy
+ * @copyright	Copyright (c) 2017, DevFy. (http://www.devfy.net/)
+ * @license	http://opensource.org/licenses/MIT	MIT License
+ * @link	http://www.devfy.net
+ * @since	Version 1.0.0
  * @filesource
  */
 
-namespace Controlador;
+namespace Ayudante;
 
-use \Modelo\Home as Home;
-use \Vista\Plantilla as Plantilla;
-use \Modelo\Usuario as Usuario;
-use \Ayudante\Url as Url;
+class Url{
 
-class homeControlador
-{
-    
-    private $home;
-    private $vista;
-    private $usuario;
     private $url;
-    
-    public function __construct()
-    {
-        $this->home     = new Home();
-        $this->vista    = new Plantilla();
-        $this->usuario  = new Usuario();
-        $this->url      = new Url();
-        $this->vista->url       = $this->url;
+    private $archivo;
+    private static $css     = CSS;
+    private static $js      = JS;
+    private static $img     = IMG;
+    private static $base    = URL;
+ 
+    public static function UrlBase($url = '')
+	{
+        return self::$base.$url;
     }
-    
-    public function __destruct()
-    {
-    	$this->vista->render('modulos/footer');
+
+    public static function Css($archivo)
+	{
+        return self::$css.$archivo;
     }
-    
-    public function index()
-    {
-    	$this->vista->titulo = "Inicio | Waiter Express";
-    	$this->vista->render('modulos/head');
-        $this->vista->datos =  $this->usuario->isLogin();
+
+    public static function Js($archivo)
+	{
+        return self::$js.$archivo;
+    }
+
+    public static function Img($archivo)
+	{
+        return self::$img.$archivo;
     }
 }
-?>

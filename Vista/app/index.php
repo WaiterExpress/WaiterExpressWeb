@@ -2,7 +2,7 @@
    <div class="row vertical-offset-100">
       <div class="col-md-9 col-md-offset-2">
         <center>
-            <img src="<?php echo IMG; ?>logo.png" width="90%" alt="logo">
+            <img src="<?php echo $url->Img('logo.png'); ?>" width="90%" alt="logo">
         </center>
         <div class="panel panel-default">
             <div class="panel-heading">

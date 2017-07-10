@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title><?php echo htmlspecialchars($titulo) ?></title>
+    <title><?php echo htmlspecialchars($titulo); ?></title>
 
     <!-- Bootstrap -->
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="<?php echo CSS; ?>waiter.css">
-    <link rel="stylesheet" href="<?php echo CSS; ?>cocinero.css">
-    <link rel="stylesheet" href="<?php echo CSS; ?>iconos.css">
+    <link rel="stylesheet" href="<?php echo $url->Css('waiter.css'); ?>">
+    <link rel="stylesheet" href="<?php echo $url->Css('cocinero.css'); ?>">
+    <link rel="stylesheet" href="<?php echo $url->Css('iconos.css'); ?>">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -27,7 +27,7 @@
       <div class="container">
         <div class="navbar-header">
           <div class="navbar-brand">
-            <a href="<?php echo URL; ?>" class="navbar-brand"><img src="<?php echo IMG; ?>logo.png" width="150px"/></a>
+            <a href="<?php echo $url->UrlBase(); ?>" class="navbar-brand"><img src="<?php echo $url->Img('logo.png'); ?>" width="150px"/></a>
           </div>
           <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
             <span class="icon-bar"></span>

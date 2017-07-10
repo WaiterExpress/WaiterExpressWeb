@@ -100,16 +100,13 @@ class MultiLanguage
 		if($language == "") {
 			$language = $_SESSION['language'];
 		}
-		
-		if($language == "en")
-		{
-			echo sprintf(_($this->language_array[$string][0]), $valor);	
-		}
-		else if($language == "es")
-		{
-			echo sprintf(_($this->language_array[$string][1]), $valor);	
-		}else{
-			echo sprintf(_($this->language_array[$string][0]), $valor);	
+
+		if($language == "en") {
+			echo sprintf(_($this->language_array[$string][0]), $valor);
+		}else if($language == "es") {
+			echo sprintf(_($this->language_array[$string][1]), $valor);
+		}else {
+			echo sprintf(_($this->language_array[$string][0]), $valor);
 		}
 	}
 

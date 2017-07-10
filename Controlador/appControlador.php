@@ -38,14 +38,18 @@
 namespace Controlador;
 
 use \Vista\Plantilla as Plantilla;
+use \Ayudante\Url as Url;
 
 class appControlador
 {
     private $vista;
+    private $url;
     
     public function __construct()
     {
-        $this->vista    = new Plantilla();
+        $this->vista        = new Plantilla();
+        $this->url          = new Url();
+        $this->vista->url   = $this->url;
     }
     
     public function __destruct()
