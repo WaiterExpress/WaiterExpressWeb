@@ -134,45 +134,6 @@ LOCK TABLES `foto_restaurante` WRITE;
 
 UNLOCK TABLES;
 
-/*Table structure for table `incluyente` */
-
-DROP TABLE IF EXISTS `incluyente`;
-
-CREATE TABLE `incluyente` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(35) DEFAULT NULL,
-  `estado` BIT(1) DEFAULT b'1',
-  PRIMARY KEY (`id`)
-) ENGINE=INNODB DEFAULT CHARSET=utf8;
-
-/*Data for the table `incluyente` */
-
-LOCK TABLES `incluyente` WRITE;
-
-UNLOCK TABLES;
-
-/*Table structure for table `incluyente_relacion` */
-
-DROP TABLE IF EXISTS `incluyente_relacion`;
-
-CREATE TABLE `incluyente_relacion` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `id_producto` INT(11) DEFAULT NULL,
-  `id_incluyente` INT(11) DEFAULT NULL,
-  `estado` BIT(1) DEFAULT b'0',
-  PRIMARY KEY (`id`),
-  KEY `fk_id_producto_incluyente` (`id_producto`),
-  KEY `fk_id_incluyente` (`id_incluyente`),
-  CONSTRAINT `fk_id_incluyente` FOREIGN KEY (`id_incluyente`) REFERENCES `incluyente` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_id_producto_incluyente` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=INNODB DEFAULT CHARSET=utf8;
-
-/*Data for the table `incluyente_relacion` */
-
-LOCK TABLES `incluyente_relacion` WRITE;
-
-UNLOCK TABLES;
-
 /*Table structure for table `menu` */
 
 DROP TABLE IF EXISTS `menu`;

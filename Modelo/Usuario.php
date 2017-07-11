@@ -56,17 +56,19 @@ class Usuario
 
 	public function __construct()
 	{
-        if (!isset($_SESSION)) session_start();
-        $this->con    	= new Conexion();
-        $this->crypt 	= new Encriptacion();
-        $this->url 		= new Url();
+		if (!isset($_SESSION)) session_start();
+		$this->con    	= new Conexion();
+		$this->crypt 	= new Encriptacion();
+		$this->url 		= new Url();
 	}
 
-	public function set($atributo, $contenido){
+	public function set($atributo, $contenido)
+	{
 		$this->$atributo = $contenido;
 	}
 
-	public function get($atributo){
+	public function get($atributo)
+	{
 		return $this->$atributo;
 	}
 
