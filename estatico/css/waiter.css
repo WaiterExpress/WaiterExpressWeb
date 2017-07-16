@@ -1,5 +1,4 @@
 body {
-    min-height: 2000px;
     padding-top: 70px;
 }
 
@@ -106,4 +105,136 @@ body {
 
 .navbar-brand {
     margin-top: -13px;
+}
+
+*[role="form"] {
+    padding: 15px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 0.3em;
+}
+
+*[role="form"] h2 {
+    margin-left: 5em;
+    margin-bottom: 1em;
+}
+
+
+/* Radio Button waiter */
+
+.radio-waiter.active {
+    background: #C71616;
+}
+
+.radio-waiter {
+    padding: 10px;
+    margin-left: 15px;
+    position: relative;
+}
+
+.radio-waiter-word {
+    font-size: 12px;
+    font-weight: 600;
+    margin-left: 30px;
+}
+
+.radio-dot:before,
+.radio-dot:after {
+    content: "";
+    display: block;
+    position: absolute;
+    background: #fff;
+    border-radius: 100%;
+}
+
+.radio-dot:before {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ccc;
+    top: 10px;
+    left: 16px;
+}
+
+.radio-dot:after {
+    width: 12px;
+    height: 12px;
+    border-radius: 100%;
+    top: 14px;
+    left: 20px;
+}
+
+.radio-waiter.active .radio-waiter-word {
+    color: #fff;
+}
+
+.radio-waiter.active .radio-dot:after {
+    background: #8C0707;
+}
+
+.radio-waiter.active .radio-dot:before {
+    background: #fff;
+    border-color: #C71616;
+}
+
+.radio-waiter:hover .radio-dot:before {
+    border-color: #adadad;
+}
+
+.radio-waiter.active:hover .radio-dot:before {
+    border-color: #C71616;
+}
+
+.radio-waiter.active .radio-dot:after {
+    background: #8C0707;
+}
+
+.radio-waiter:hover .radio-dot:after {
+    background: #e6e6e6;
+}
+
+.radio-waiter.active:hover .radio-dot:after {
+    background: #8C0707;
+}
+
+@media (max-width: 400px) {
+    .mobile-br {
+        display: none;
+    }
+    .radio-waiter {
+        width: 49%;
+        padding: 10px;
+        position: relative;
+    }
+}
+
+
+/* Pie de pagina waiter */
+
+footer {
+    margin-top: 25px;
+}
+
+.footer p {
+    margin: 0;
+}
+
+.footer-bottom {
+    background: white;
+    color: grey;
+    border-top: 1px solid #DDDDDD;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.footer-bottom pull-left {
+    padding-top: 6px;
+}
+
+.copyright-devider {
+    padding-right: 5px;
+    padding-left: 10px;
+}
+
+.container a {
+    color: grey;
 }

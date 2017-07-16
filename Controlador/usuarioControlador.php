@@ -72,6 +72,19 @@ class usuarioControlador
     	$this->vista->render('modulos/footer.login');
     }
 
+    public function Crear()
+    {
+    	$this->vista->titulo = "Crear Usuarios | " . APPNAME;
+    	$this->vista->render('modulos/head.admin');
+        if ($_POST) {
+            $this->usuario->set("email", filter_var($_POST['email']));
+            $this->usuario->set("clave", filter_var($_POST['clave']));
+            $this->usuario->ComprobarUsuario();
+        }
+        $this->vista->render('usuario/crear');
+    	$this->vista->render('modulos/footer');
+    }
+    
     public function Cerrar(){
         $this->usuario->CierreSesion();
     }

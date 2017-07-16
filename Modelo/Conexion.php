@@ -46,8 +46,8 @@ class Conexion{
 	*/
 	private $con;
 	private $datos = array(
-		"host"	=> "",
-		"user"	=> "",
+		"host"	=> "127.0.0.1",
+		"user"	=> "root",
 		"pass"	=> "",
 		"db"	=> ""
 	);

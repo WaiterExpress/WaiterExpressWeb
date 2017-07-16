@@ -1,4 +1,3 @@
-<?php
 /**
  * Copyright (C) 2017 Luis Cortes Juarez
  *
@@ -34,66 +33,13 @@
  * @since   Version 1.0.0
  * @filesource
  */
- 
-namespace Controlador;
 
-use \Vista\Plantilla as Plantilla;
-use \Ayudante\Url as Url;
-use \Modelo\Usuario as Usuario;
-
-class appControlador
-{
-    private $usuario;
-    private $vista;
-    private $url;
-    
-    public function __construct()
-    {
-        $this->usuario      = new Usuario();
-        $this->vista        = new Plantilla();
-        $this->url          = new Url();
-        $this->vista->url   = $this->url;
+$(window).resize(function() {
+    if ($(window).width() <= 600) {
+        $('#prop-type-group').removeClass('btn-group');
+        $('#prop-type-group').addClass('btn-group-vertical');
+    } else {
+        $('#prop-type-group').addClass('btn-group');
+        $('#prop-type-group').removeClass('btn-group-vertical');
     }
-    
-    public function __destruct()
-    {
-    }
-
-    public function Index(){
-        $this->vista->datos =  $this->usuario->isLogin();
-    }
-    
-    public function Salonero()
-    {
-    	$this->vista->titulo = "Salonero | " . APPNAME;
-    	$this->vista->render('modulos/head');
-    }
-    
-    public function Cocinero()
-    {
-    	$this->vista->titulo = "Cocinero | " . APPNAME;
-    	$this->vista->render('modulos/head.cocinero');
-    	$this->vista->render('app/cocinero');
-    	$this->vista->render('modulos/footer');
-    }
-    
-    public function Cliente()
-    {
-    	$this->vista->titulo = "Cliente | " . APPNAME;
-    	$this->vista->render('modulos/head');
-    }
-    
-    public function Gerente()
-    {
-    	$this->vista->titulo = "Gerente | " . APPNAME;
-    	$this->vista->render('modulos/head');
-    }
-    
-    public function Administrador()
-    {
-    	$this->vista->titulo = "Administrador | " . APPNAME;
-    	$this->vista->render('modulos/head.admin');
-    	$this->vista->render('modulos/footer');
-    }
-}
-?>
+});

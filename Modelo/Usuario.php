@@ -81,7 +81,7 @@ class Usuario
 			$_SESSION['usuario'] =  isset($this->email) ? $this->email : null;
 			switch ($row['id_roles']) {
 				case 0:
-					header("Location:". $this->url->UrlBase('app/admin'));
+					header("Location:". $this->url->UrlBase('app/administrador'));
 					exit;
 					break;
 				case 1:
