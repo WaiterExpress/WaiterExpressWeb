@@ -36,7 +36,7 @@
  */
 
 namespace Modelo;
-
+use \Modelo\Conexion as Conexion;
 use \Ayudante\Encriptacion as Encriptacion;
 
 class Api
@@ -60,6 +60,31 @@ class Api
 	public function get($atributo){
 		return $this->$atributo;
 	}
+
+    public function Usuarios(){
+		
+		$this->correo 	= filter_var($this->correo, FILTER_SANITIZE_STRING);
+        $datos = $this->con->ConsultaRetorno("CALL `sp_buscar_usuario`('{$this->correo}');");
+        $result = array();
+        while($row   = $datos->fetch_array()){
+            array_push(
+                $result,
+                array('Cedula'  =>$row[0],
+                'usuario'       =>$row[1],
+                'correo'        =>$row[2],
+                'telefono'      =>$row[3],
+                'nombre'        =>$row[4],
+                'apellido'      =>$row[5],
+                'id_rol'      	=>$row[6],
+                'rol'      		=>$row[7],
+                'token'        	=>$row[8],
+				'estado'       	=>$row[9]
+                )
+            );
+        }
+        echo json_encode(array("usuarios"=>$result));
+
+    }
 
 	public function ComprobarLogin(){
 		$this->hash		= $this->crypt->encrypt_decrypt('encrypt', $this->clave);

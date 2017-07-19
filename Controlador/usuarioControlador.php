@@ -74,6 +74,7 @@ class usuarioControlador
 
     public function Crear()
     {
+        $this->vista->datos =  $this->usuario->isLogin();
     	$this->vista->titulo = "Crear Usuarios | " . APPNAME;
     	$this->vista->render('modulos/head.admin');
         if ($_POST) {

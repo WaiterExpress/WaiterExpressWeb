@@ -56,6 +56,12 @@ CREATE TABLE `avatar` (
 
 LOCK TABLES `avatar` WRITE;
 
+INSERT  INTO `avatar`(`id`,`avatar`) VALUES (1,'avatar.png'),(2,'avatar-2.png');
+
+/*Data for the table `avatar` */
+
+LOCK TABLES `avatar` WRITE;
+
 UNLOCK TABLES;
 
 /*Table structure for table `categoria` */
@@ -74,6 +80,8 @@ CREATE TABLE `categoria` (
 /*Data for the table `categoria` */
 
 LOCK TABLES `categoria` WRITE;
+
+INSERT  INTO `categoria`(`id`,`id_restaurante`,`nombre`) VALUES (0,1,'Entradas'),(2,1,'Platos Fuertes'),(3,1,'bebidas');
 
 UNLOCK TABLES;
 
@@ -218,6 +226,8 @@ CREATE TABLE `producto` (
 
 LOCK TABLES `producto` WRITE;
 
+INSERT  INTO `producto`(`id`,`id_cat`,`codigo`,`nombre`,`descripcion`,`precio`,`excluyente`) VALUES (1,0,'1234','mini lasagna con ensalada','Lasagna con carne acompanada de ensalada cesar','3650',1),(2,2,'12345','minicrepa de pollo con ensalada y papas','crepa de tortilla de harina con papas a la francesa y ensalada ','4350',1),(3,2,'12455','medio lapiz integral','emparedado de pan integral ','2600',1),(4,3,'12','capuccino frio',NULL,'2250',1);
+
 UNLOCK TABLES;
 
 /*Table structure for table `restaurante` */
@@ -242,6 +252,8 @@ CREATE TABLE `restaurante` (
 /*Data for the table `restaurante` */
 
 LOCK TABLES `restaurante` WRITE;
+
+INSERT  INTO `restaurante`(`id`,`gerente`,`nombre`,`telefono`,`mesas`,`localidad`,`direccion`) VALUES (0,'115320153','Fogata','24520913',15,1,'100m Norte de supercoop Palmares Alajuela'),(1,'503890553','Restaurante Las Lomas','26661234',14,555178,'Liberia Guanacaste');
 
 UNLOCK TABLES;
 
@@ -268,18 +280,20 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `submenu_categoria`;
 
 CREATE TABLE `submenu_categoria` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(35) DEFAULT NULL,
-  `submenu_tipo` tinyint(2) DEFAULT NULL,
-  `estado` bit(1) DEFAULT b'0',
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(35) DEFAULT NULL,
+  `submenu_tipo` TINYINT(2) DEFAULT NULL,
+  `estado` BIT(1) DEFAULT b'0',
   PRIMARY KEY (`id`),
   KEY `fk_submenu_tipo` (`submenu_tipo`),
   CONSTRAINT `fk_submenu_tipo` FOREIGN KEY (`submenu_tipo`) REFERENCES `submenu_tipo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=INNODB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `submenu_categoria` */
 
 LOCK TABLES `submenu_categoria` WRITE;
+
+INSERT  INTO `submenu_categoria`(`id`,`nombre`,`submenu_tipo`,`estado`) VALUES (2,'carne',1,1);
 
 UNLOCK TABLES;
 
@@ -288,15 +302,17 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `submenu_items`;
 
 CREATE TABLE `submenu_items` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(25) DEFAULT NULL,
-  `estado` bit(1) DEFAULT b'1',
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(25) DEFAULT NULL,
+  `estado` BIT(1) DEFAULT b'1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*Data for the table `submenu_items` */
 
 LOCK TABLES `submenu_items` WRITE;
+
+INSERT  INTO `submenu_items`(`id`,`nombre`,`estado`) VALUES (1,'pollo',1),(2,'carne',1),(3,'Jamon',1),(4,'pavo',1),(5,'mano de piedra',1);
 
 UNLOCK TABLES;
 
@@ -305,11 +321,11 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `submenu_relacion`;
 
 CREATE TABLE `submenu_relacion` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_producto` int(11) DEFAULT NULL,
-  `id_submenu_items` int(11) DEFAULT NULL,
-  `id_categoria` int(11) DEFAULT NULL,
-  `estado` bit(1) DEFAULT b'0',
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id_producto` INT(11) DEFAULT NULL,
+  `id_submenu_items` INT(11) DEFAULT NULL,
+  `id_categoria` INT(11) DEFAULT NULL,
+  `estado` BIT(1) DEFAULT b'0',
   PRIMARY KEY (`id`),
   KEY `fk_id_producto_excluyente` (`id_producto`),
   KEY `fk_id_excluyente` (`id_submenu_items`),
@@ -317,11 +333,13 @@ CREATE TABLE `submenu_relacion` (
   CONSTRAINT `fk_id_excluyente` FOREIGN KEY (`id_submenu_items`) REFERENCES `submenu_items` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_id_excluyente_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `submenu_categoria` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_id_producto_excluyente` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*Data for the table `submenu_relacion` */
 
 LOCK TABLES `submenu_relacion` WRITE;
+
+INSERT  INTO `submenu_relacion`(`id`,`id_producto`,`id_submenu_items`,`id_categoria`,`estado`) VALUES (1,1,1,2,1),(2,1,2,2,1),(3,2,1,2,1),(4,2,3,2,1),(5,3,2,2,1),(6,3,3,2,1),(7,3,4,2,1),(8,3,5,2,1);
 
 UNLOCK TABLES;
 
@@ -330,17 +348,17 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `submenu_tipo`;
 
 CREATE TABLE `submenu_tipo` (
-  `id` tinyint(2) NOT NULL AUTO_INCREMENT,
-  `tipo` varchar(35) DEFAULT NULL,
-  `estado` bit(1) DEFAULT NULL,
+  `id` TINYINT(2) NOT NULL AUTO_INCREMENT,
+  `tipo` VARCHAR(35) DEFAULT NULL,
+  `estado` BIT(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=INNODB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `submenu_tipo` */
 
 LOCK TABLES `submenu_tipo` WRITE;
 
-insert  into `submenu_tipo`(`id`,`tipo`,`estado`) values (1,'Excluyente',''),(2,'Incluyente','');
+INSERT  INTO `submenu_tipo`(`id`,`tipo`,`estado`) VALUES (1,'Excluyente',1),(2,'Incluyente',1);
 
 UNLOCK TABLES;
 
@@ -353,7 +371,7 @@ CREATE TABLE `usuario` (
   `usuario` VARCHAR(20) DEFAULT NULL,
   `clave` VARCHAR(88) DEFAULT NULL,
   `id_roles` TINYINT(2) DEFAULT NULL,
-  `log_externo` bit(1) DEFAULT b'0',
+  `log_externo` BIT(1) DEFAULT b'0',
   `token` VARCHAR(88) DEFAULT NULL,
   `inactivo` BIT(1) DEFAULT b'0',
   PRIMARY KEY (`cedula`),
@@ -367,6 +385,8 @@ CREATE TABLE `usuario` (
 /*Data for the table `usuario` */
 
 LOCK TABLES `usuario` WRITE;
+
+INSERT  INTO `usuario`(`cedula`,`usuario`,`clave`,`id_roles`,`log_externo`,`token`,`inactivo`) VALUES ('115320153','danieljoserm','WFFRTHMwUlQ0WWV6UjNET0daOXBzdz09',1,'\0',NULL,'\0'),('503890553','luis','L0tyelN1N0JqUW53dVkvQTQ2alMzUT09',0,'\0','1546','');
 
 UNLOCK TABLES;
 
@@ -387,6 +407,8 @@ CREATE TABLE `usuario_avatar` (
 
 LOCK TABLES `usuario_avatar` WRITE;
 
+INSERT  INTO `usuario_avatar`(`cedula`,`id_avatar`) VALUES ('115320153',1),('503890553',2);
+
 UNLOCK TABLES;
 
 /*Table structure for table `usuario_datos` */
@@ -398,13 +420,15 @@ CREATE TABLE `usuario_datos` (
   `nombre` VARCHAR(30) DEFAULT NULL,
   `apellido` VARCHAR(30) DEFAULT NULL,
   `telefono` CHAR(12) DEFAULT NULL,
-  `correo` VARCHAR(30) DEFAULT NULL,
+  `correo` VARCHAR(50) DEFAULT NULL,
   PRIMARY KEY (`cedula`)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*Data for the table `usuario_datos` */
 
 LOCK TABLES `usuario_datos` WRITE;
+
+INSERT  INTO `usuario_datos`(`cedula`,`nombre`,`apellido`,`telefono`,`correo`) VALUES ('115320153','Daniel','Rodriguez','87389992','danieljoserm@gmail.com'),('503890553','Luis','Cortes','87969889','luizcortesj@gmail.com');
 
 UNLOCK TABLES;
 
@@ -414,24 +438,30 @@ UNLOCK TABLES;
 
 DELIMITER $$
 
-/*!50003 CREATE PROCEDURE `sp_buscar_usuario`(IN usere VARCHAR(15))
+/*!50003 CREATE PROCEDURE `sp_buscar_usuario`(IN correo VARCHAR(50))
 BEGIN
-SELECT
-u.cedula,
-u.usuario,
-u.`token`,
-ud.`correo`,
-ud.`telefono`,
-ud.nombre,
-ud.apellido,
-r.id_roles,
-r.rol,
-u.`inactivo`
-FROM usuario AS u
-INNER JOIN roles r ON (r.id_roles = u.id_roles)
-INNER JOIN `usuario_datos` AS ud ON (ud.`cedula` = u.`cedula`)
-WHERE
-(usere IS NULL OR ud.`correo` = usere);
+	if correo = 'NULL' then
+	 set correo= NULL;
+	end If;
+	SELECT
+	u.cedula,
+	u.usuario,
+	a.avatar,
+	ud.`correo`,
+	ud.`telefono`,
+	ud.nombre,
+	ud.apellido,
+	r.id_roles,
+	r.rol,
+	u.`token`,
+	u.`inactivo`
+	FROM usuario AS u
+	INNER JOIN roles r ON (r.id_roles = u.id_roles)
+	INNER JOIN `usuario_datos` AS ud ON (ud.`cedula` = u.`cedula`)
+	INNER JOIN `usuario_avatar` AS ua ON (ua.`cedula` = u.`cedula`)
+	INNER JOIN `avatar` AS a ON (a.id = ua.id_avatar)
+	WHERE
+	(correo IS NULL OR ud.`correo` = correo);
     END */$$
 DELIMITER ;
 
@@ -470,24 +500,6 @@ DELIMITER ;
 /*!50003 DROP PROCEDURE IF EXISTS  `sp_mostrar_usuarios` */;
 
 DELIMITER $$
-
-/*!50003 CREATE PROCEDURE `sp_mostrar_usuarios`()
-BEGIN
-	SELECT
-	u.`cedula`,
-	u.`usuario`,
-	u.`id_roles`,
-	ud.`nombre`,
-	ud.`apellido`,
-	ud.`correo`,
-	ud.`telefono`,
-	a.`avatar`
-	FROM `usuario` AS u 
-	INNER JOIN `usuario_datos` AS ud ON ( ud.`cedula` = u.`cedula`)
-	INNER JOIN `usuario_avatar` AS ua ON (ua.`cedula` = u.`cedula`)
-	INNER JOIN `avatar` AS a ON (a.`id`= ua.`id_avatar`);
-    END */$$
-DELIMITER ;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

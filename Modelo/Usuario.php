@@ -47,7 +47,9 @@ class Usuario
 	private $cedula;
 	private $nombre;
 	private $apellidos;
+	private $telefono;
 	private $correo;
+	private $rol;
 	private $con;
     private $hash;
 	private $crypt;
@@ -114,18 +116,21 @@ class Usuario
 	}
 
 	public function RegistrarUsuario(){
-		$this->usuario 	= filter_var($this->usuario, FILTER_SANITIZE_STRING);
-		$this->clave 	= filter_var($this->clave, FILTER_SANITIZE_STRING);
-		$this->clave  	= $this->Encriptacion($this->usuario, $this->clave);
 		$this->cedula 	= filter_var($this->cedula, FILTER_VALIDATE_INT);
 		$this->nombre 	= filter_var($this->nombre, FILTER_SANITIZE_STRING);
 		$this->apellidos= filter_var($this->apellidos, FILTER_SANITIZE_STRING);
+		$this->telefono = filter_var($this->telefono, FILTER_SANITIZE_STRING);
 		$this->correo 	= filter_var($this->correo, FILTER_VALIDATE_EMAIL);
+		$this->usuario 	= filter_var($this->usuario, FILTER_SANITIZE_STRING);
+		$this->clave 	= filter_var($this->clave, FILTER_SANITIZE_STRING);
+		
+		$this->clave  	= $this->crypt->encrypt_decrypt('encrypt', $this->clave);
+
 		$datos 			= $this->con->Consultasimple("CALL `sp_insert_usuarios`('{$this->cedula}', '{$this->usuario}', '{$this->clave}', '{$this->nombre}', '{$this->apellidos}', '{$this->correo}')");
 		echo '<div class="alert alert-success" role="alert">
             <strong>&iexcl;Excelente!</strong> La cuenta ha sido creada.
           </div>';
-          header("Location:". URL );
+          header("Location:". URL);
 			exit;
 	}
 

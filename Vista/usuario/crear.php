@@ -26,9 +26,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="email" class="col-sm-3 control-label">Direcci&oacute;n de Correo Electr&oacute;nico</label>
+                    <label for="correo" class="col-sm-3 control-label">Direcci&oacute;n de Correo Electr&oacute;nico</label>
                     <div class="col-sm-9">
-                        <input type="email" id="email" name="email" placeholder="Direcci&oacute;n de Correo Electr&oacute;nico" class="form-control">
+                        <input type="email" id="correo" name="correo" placeholder="Direcci&oacute;n de Correo Electr&oacute;nico" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
@@ -38,9 +38,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="password" class="col-sm-3 control-label">Contraseña</label>
+                    <label for="clave" class="col-sm-3 control-label">Contraseña</label>
                     <div class="col-sm-9">
-                        <input type="password" id="password" name="pass" placeholder="Contraseña" class="form-control">
+                        <input type="password" id="clave" name="clave" placeholder="Contraseña" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">

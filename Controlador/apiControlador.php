@@ -56,7 +56,9 @@ class apiControlador
     
     public function __destruct(){}
     
-    public function index(){}
+    public function index(){
+        echo 'Api PHP JSON v1.0 | &copy; WaiterExpress '.date('Y');
+    }
 
     /**
      * Formato de envio
@@ -68,6 +70,13 @@ class apiControlador
             $this->api->set("correo", $this->filtro->Filtrar($_GET['correo'], 'string'));
             $this->api->set("clave", $this->filtro->Filtrar($_GET['clave'], 'string'));
             $this->api->ComprobarLogin();
+        }
+    }
+
+    public function Usuarios(){
+        if($_GET){
+            $this->api->set("correo", filter_var($_GET['correo']));
+            $this->api->Usuarios();
         }
     }
 }
