@@ -71,19 +71,19 @@ class Api
                 $result,
                 array('Cedula'  =>$row[0],
                 'usuario'       =>$row[1],
-                'correo'        =>$row[2],
-                'telefono'      =>$row[3],
-                'nombre'        =>$row[4],
-                'apellido'      =>$row[5],
-                'id_rol'      	=>$row[6],
-                'rol'      		=>$row[7],
-                'token'        	=>$row[8],
-				'estado'       	=>$row[9]
+                'avatar'       	=>$row[2],
+                'correo'        =>$row[3],
+                'telefono'      =>$row[4],
+                'nombre'        =>$row[5],
+                'apellido'      =>$row[6],
+                'id_rol'      	=>$row[7],
+                'rol'      		=>$row[8],
+                'token'        	=>$row[9],
+				'estado'       	=>$row[10]
                 )
             );
         }
         echo json_encode(array("usuarios"=>$result));
-
     }
 
 	public function ComprobarLogin(){
