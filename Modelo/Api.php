@@ -41,56 +41,61 @@ use \Ayudante\Encriptacion as Encriptacion;
 
 class Api
 {
-
-	private $con;
-	private $crypt;
+    
+    private $con;
+    private $crypt;
     private $hash;
-	private $correo;
-	private $clave;
-
-	public function __construct(){
-		$this->con		= new Conexion();
-		$this->crypt	= new Encriptacion();
-	}
-
-	public function set($atributo, $contenido){
-		$this->$atributo = $contenido;
-	}
-
-	public function get($atributo){
-		return $this->$atributo;
-	}
-
-    public function Usuarios(){
-		
-		$this->correo 	= filter_var($this->correo, FILTER_SANITIZE_STRING);
-        $datos = $this->con->ConsultaRetorno("CALL `sp_buscar_usuario`('{$this->correo}');");
-        $result = array();
-        while($row   = $datos->fetch_array()){
-            array_push(
-                $result,
-                array('Cedula'  =>$row[0],
-                'usuario'       =>$row[1],
-                'avatar'       	=>$row[2],
-                'correo'        =>$row[3],
-                'telefono'      =>$row[4],
-                'nombre'        =>$row[5],
-                'apellido'      =>$row[6],
-                'id_rol'      	=>$row[7],
-                'rol'      		=>$row[8],
-                'token'        	=>$row[9],
-				'estado'       	=>$row[10]
-                )
-            );
-        }
-        echo json_encode(array("usuarios"=>$result));
+    private $correo;
+    private $clave;
+    
+    public function __construct()
+    {
+        $this->con   = new Conexion();
+        $this->crypt = new Encriptacion();
     }
-
-	public function ComprobarLogin(){
-		$this->hash		= $this->crypt->encrypt_decrypt('encrypt', $this->clave);
-		$this->login	= $this->con->ConsultaRetorno("CALL `sp_comprobar_login`('{$this->correo}','{$this->hash}')");
-		$this->row		= $this->login->fetch_assoc();
-		echo $this->row['login'];
-	}
+    
+    public function set($atributo, $contenido)
+    {
+        $this->$atributo = $contenido;
+    }
+    
+    public function get($atributo)
+    {
+        return $this->$atributo;
+    }
+    
+    public function Usuarios()
+    {
+        
+        $this->correo = filter_var($this->correo, FILTER_SANITIZE_STRING);
+        $datos        = $this->con->ConsultaRetorno("CALL `sp_buscar_usuario`('{$this->correo}');");
+        $result       = array();
+        while ($row = $datos->fetch_array()) {
+            array_push($result, array(
+                'Cedula' => $row[0],
+                'usuario' => $row[1],
+                'avatar' => $row[2],
+                'correo' => $row[3],
+                'telefono' => $row[4],
+                'nombre' => $row[5],
+                'apellido' => $row[6],
+                'id_rol' => $row[7],
+                'rol' => $row[8],
+                'token' => $row[9],
+                'estado' => $row[10]
+            ));
+        }
+        echo json_encode(array(
+            "usuarios" => $result
+        ));
+    }
+    
+    public function ComprobarLogin()
+    {
+        $this->hash  = $this->crypt->encrypt_decrypt('encrypt', $this->clave);
+        $this->login = $this->con->ConsultaRetorno("CALL `sp_comprobar_login`('{$this->correo}','{$this->hash}')");
+        $this->row   = $this->login->fetch_assoc();
+        echo $this->row['login'];
+    }
 }
 ?>
